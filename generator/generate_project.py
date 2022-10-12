@@ -3,6 +3,7 @@ from .docker_file import make_dockerfile
 from .make_file import make_makefile
 from .docker_compose import make_docker_compose
 
+
 def generate_project(answers: dict) -> None:
     """
     Generate project.
