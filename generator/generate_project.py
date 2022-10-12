@@ -1,7 +1,7 @@
 from .folders import make_folders
 from .docker_file import make_dockerfile
 from .make_file import make_makefile
-
+from .docker_compose import make_docker_compose
 
 def generate_project(answers: dict) -> None:
     """
@@ -17,3 +17,12 @@ def generate_project(answers: dict) -> None:
     make_dockerfile(answers['project_name'])
 
     make_makefile(answers['project_name'])
+
+    is_rabbitmq_enable = True if answers['broker'] == 'rabbitmq' else False
+    make_docker_compose(
+        answers['project_name'],
+        answers['redis'],
+        is_rabbitmq_enable,
+        answers['celery'],
+        answers['broker']
+    )

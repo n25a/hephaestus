@@ -54,5 +54,7 @@ def answer_questions() -> dict:
         )
 
         answers |= ans_tmp
+    else:
+        answers |= {'broker': ''}
 
     return answers
