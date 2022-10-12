@@ -3,11 +3,10 @@ import os
 
 def make_folders(project_name: str, is_celery_enabled: bool) -> None:
     """
-    Make folders for project
+    Make folders for project.
 
-    :param:
-        project_name: project name in string type
-        is_celery_enabled: celery is enabled or not in boolean type
+    :param project_name: project name in string type (e.g. my_project)
+    :param is_celery_enabled: celery is enabled or not in boolean type
     """
 
     if not os.path.exists(project_name):
