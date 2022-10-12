@@ -2,6 +2,7 @@ from .folders import make_folders
 from .docker_file import make_dockerfile
 from .make_file import make_makefile
 
+
 def generate_project(answers: dict) -> None:
     """
     Generate project.
