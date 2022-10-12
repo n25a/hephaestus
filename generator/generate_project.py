@@ -1,6 +1,6 @@
 from .folders import make_folders
 from .docker_file import make_dockerfile
-
+from .make_file import make_makefile
 
 def generate_project(answers: dict) -> None:
     """
@@ -14,3 +14,5 @@ def generate_project(answers: dict) -> None:
     )
 
     make_dockerfile(answers['project_name'])
+
+    make_makefile(answers['project_name'])
