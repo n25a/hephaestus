@@ -1,5 +1,6 @@
 
-def generate_templates():
+
+def generate_templates(project_name: str) -> None:
     """
     Generate template.
     """
