@@ -3,6 +3,7 @@ from .docker_file import make_dockerfile
 from .make_file import make_makefile
 from .docker_compose import make_docker_compose
 from .toolkit import make_toolkit
+from .celery import make_celery
 
 
 def generate_project(answers: dict) -> None:
@@ -30,3 +31,6 @@ def generate_project(answers: dict) -> None:
     )
 
     make_toolkit(answers['project_name'])
+
+    if answers['celery']:
+        make_celery(answers['project_name'])

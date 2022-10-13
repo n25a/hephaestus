@@ -59,4 +59,3 @@ def make_toolkit(project_name: str) -> None:
 
     with open(f'{project_name}/internals/toolkit/__init__.py', 'w') as toolkit_init:
         toolkit_init.write('from toolkit import validate_error, response_creator, existence_error, ERROR\n\n')
-
