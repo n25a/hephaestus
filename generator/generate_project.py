@@ -4,6 +4,7 @@ from .make_file import make_makefile
 from .docker_compose import make_docker_compose
 from .toolkit import make_toolkit
 from .celery import make_celery
+from .ascii_art import make_ascii_art
 
 
 def generate_project(answers: dict) -> None:
@@ -34,3 +35,5 @@ def generate_project(answers: dict) -> None:
 
     if answers['celery']:
         make_celery(answers['project_name'])
+
+    make_ascii_art(answers['project_name'])
