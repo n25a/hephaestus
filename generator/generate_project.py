@@ -42,4 +42,4 @@ def generate_project(answers: dict) -> None:
 
     make_config(answers['project_name'], answers['redis'], is_rabbitmq_enable)
 
-    generate_templates(answers['project_name'])
+    generate_templates(answers['project_name'], answers['celery'])

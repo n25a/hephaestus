@@ -4,11 +4,12 @@ from .app import make_app
 from .views import make_view
 
 
-def generate_templates(project_name: str) -> None:
+def generate_templates(project_name: str, is_celery_enabled: bool) -> None:
     """
     Generate template.
     """
-    make_job(project_name)
+    if is_celery_enabled:
+        make_job(project_name)
 
     make_url(project_name)
 
