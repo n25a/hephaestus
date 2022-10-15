@@ -9,7 +9,7 @@ def make_view(project_name: str) -> None:
         views.write("from rest_framework import status\n\n")
 
         views.write("from internals.toolkit import response_creator\n")
-        views.write("from internals.app import app\n\n")
+        views.write("from internals.app import app\n\n\n")
 
         views.write("class ExampleView(APIView):\n\n")
         views.write("    authentication_classes = [TokenAuthentication]\n")

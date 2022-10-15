@@ -7,7 +7,7 @@ def make_dockerfile(project_name: str) -> None:
 
     with open(f'{project_name}/Dockerfile', 'w') as dockerfile:
         dockerfile.write('# pull the official base image\n')
-        dockerfile.write('FROM python:3.8-slim\n')
+        dockerfile.write('FROM python:3.8-slim\n\n')
 
         dockerfile.write('# set work directory\n')
         dockerfile.write(f'WORKDIR /etc/opt/{project_name}\n\n')

@@ -8,9 +8,9 @@ def make_toolkit(project_name: str) -> None:
 
     with open(f'{project_name}/internals/toolkit/toolkit.py', 'w') as toolkit:
         toolkit.write('from typing import Optional')
-        toolkit.write('from rest_framework.response import Response\n\n')
+        toolkit.write('from rest_framework.response import Response\n\n\n')
 
-        toolkit.write('# ERROR is error type')
+        toolkit.write('# ERROR is error type\n')
         toolkit.write('ERROR = Optional[Response]\n\n\n')
 
         toolkit.write('def validate_error(serialized) -> ERROR:\n')

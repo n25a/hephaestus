@@ -20,17 +20,17 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
         config.write("port = 3306\n")
         config.write(f"db = '{project_name}'\n")
         config.write(f"user = '{project_name}_app'\n")
-        config.write("password = 'password'\n")
+        config.write("password = 'password'\n\n")
 
         if is_redis_enabled:
             config.write("[REDIS]\n")
             config.write("address = 'redis://127.0.0.1:6379/1'\n")
             config.write("ttl = 3600\n")
-            config.write(f"key_prefix = '{project_name}'\n")
+            config.write(f"key_prefix = '{project_name}'\n\n")
 
         if is_celery_enabled:
             config.write("[CELERY]\n")
-            config.write("broker = 'redis://localhost:6379'\n")
+            config.write("broker = 'redis://localhost:6379'\n\n")
 
     with open(f"{project_name}/internals/config/config.py", "w") as config:
         config.write("# ----------------------------------------------------------------\n")

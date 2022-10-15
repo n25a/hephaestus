@@ -48,13 +48,13 @@ def make_docker_compose(
             docker_compose.write('  redis:\n')
             docker_compose.write('    image: redis:6.0.5\n')
             docker_compose.write('    ports:\n')
-            docker_compose.write('      - "6379:6379"\n\n')
+            docker_compose.write('      - "6379:6379"\n')
 
         if is_rabbitmq_enable:
             docker_compose.write('  rabbitmq:\n')
             docker_compose.write('    image: rabbitmq:3.8.3\n')
             docker_compose.write('    ports:\n')
-            docker_compose.write('      - "5672:5672"\n\n')
+            docker_compose.write('      - "5672:5672"\n')
 
         if is_celery_enable:
             docker_compose.write('  celery:\n')

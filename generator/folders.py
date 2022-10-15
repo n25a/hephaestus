@@ -9,7 +9,7 @@ def make_folders(project_name: str, is_celery_enabled: bool) -> None:
     :param is_celery_enabled: celery is enabled or not in boolean type
     """
 
-    if not os.path.exists(project_name):
+    if os.path.exists(project_name):
         raise Exception('Project folder is exist. Please try again with another name.')
 
     os.makedirs(project_name)
