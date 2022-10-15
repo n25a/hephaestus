@@ -7,6 +7,7 @@ from .celery import make_celery
 from .ascii_art import make_ascii_art
 from .config import make_config
 from .template import generate_templates
+from .app import make_app
 
 
 def generate_project(answers: dict) -> None:
@@ -39,6 +40,8 @@ def generate_project(answers: dict) -> None:
         make_celery(answers['project_name'])
 
     make_ascii_art(answers['project_name'])
+
+    make_app(answers['project_name'])
 
     make_config(answers['project_name'], answers['redis'], is_rabbitmq_enable)
 
