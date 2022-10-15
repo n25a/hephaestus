@@ -9,14 +9,14 @@ def make_view(project_name: str) -> None:
         views.write("from rest_framework import status\n\n")
 
         views.write("from internals.toolkit import response_creator\n")
-        views.write("import repositories.example as repo_example\n\n")
+        views.write("from internals.app import app\n\n")
 
         views.write("class ExampleView(APIView):\n\n")
         views.write("    authentication_classes = [TokenAuthentication]\n")
         views.write("    permission_classes = [IsAuthenticated]\n\n")
 
         views.write("    def post(self, request):\n")
-        views.write("        err = repo_example.create_example(request.data)\n")
+        views.write("        err = app.repository.example.create_example(request.data)\n")
         views.write("        if err:\n")
         views.write("            return err\n\n")
         views.write("        return response_creator(\n")
