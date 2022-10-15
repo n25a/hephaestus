@@ -26,7 +26,7 @@ def make_makefile(project_name: str) -> None:
 
         makefile.write('blue:\n')
         makefile.write(
-            '    - blue .\n\n'
+            "    - blue . --exclude=['.tox','__init__.py','venv/','tests/']\n\n"
         )
 
         makefile.write('lint: isort blue flake8\n\n')

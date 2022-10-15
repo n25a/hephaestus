@@ -8,6 +8,7 @@ from .ascii_art import make_ascii_art
 from .config import make_config
 from .template import generate_templates
 from .app import make_app
+from .logger import make_logger
 
 
 def generate_project(answers: dict) -> None:
@@ -46,3 +47,5 @@ def generate_project(answers: dict) -> None:
     make_config(answers['project_name'], answers['redis'], is_rabbitmq_enable)
 
     generate_templates(answers['project_name'], answers['celery'])
+
+    make_logger(answers['project_name'])

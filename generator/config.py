@@ -9,9 +9,6 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
         config.write("[TIMEZONE]\n")
         config.write("zone = 'Asia/Tehran'\n\n")
 
-        config.write("[LOGGER]\n")
-        config.write("level = 'info'\n\n")
-
         config.write("[LOCALE]\n")
         config.write("default = 'fa'\n\n")
 
