@@ -10,6 +10,7 @@ from .template import generate_templates
 from .app import make_app
 from .logger import make_logger
 from .readme import make_readme
+from .git import make_git
 
 
 def generate_project(answers: dict) -> None:
@@ -52,3 +53,5 @@ def generate_project(answers: dict) -> None:
     make_logger(answers['project_name'])
 
     make_readme(answers['project_name'], answers['project_description'])
+
+    make_git()
