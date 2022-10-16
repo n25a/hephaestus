@@ -31,23 +31,25 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
             config.write("broker = 'redis://localhost:6379'\n\n")
 
     with open(f"{project_name}/internals/config/config.py", "w") as config:
+        config.write("from .config_wrapper import wrapper\n\n\n")
+
         config.write("# ----------------------------------------------------------------\n")
         config.write("#                            Time Zone\n")
         config.write("# ----------------------------------------------------------------\n\n")
         config.write("class TimeZone:\n")
-        config.write("    zone: str = ''\n\n")
+        config.write("    zone: str = ''\n\n\n")
 
         config.write("# ----------------------------------------------------------------\n")
         config.write("#                              Logger\n")
         config.write("# ----------------------------------------------------------------\n\n")
         config.write("class Logger:\n")
-        config.write("    level: str = ''\n\n")
+        config.write("    level: str = ''\n\n\n")
 
         config.write("# ----------------------------------------------------------------\n")
         config.write("#                              Locale\n")
         config.write("# ----------------------------------------------------------------\n\n")
         config.write("class Locale:\n")
-        config.write("    default: str = ''\n\n")
+        config.write("    default: str = ''\n\n\n")
 
         config.write("# ----------------------------------------------------------------\n")
         config.write("#                               DB\n")
@@ -57,7 +59,7 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
         config.write("    port: str = ''\n")
         config.write("    db: str = ''\n")
         config.write("    user: str = ''\n")
-        config.write("    password: str = ''\n\n")
+        config.write("    password: str = ''\n\n\n")
 
         if is_redis_enabled:
             config.write("# ----------------------------------------------------------------\n")
@@ -66,14 +68,14 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
             config.write("class Redis:\n")
             config.write("    address: str = ''\n")
             config.write("    ttl: str = 60\n")
-            config.write("    key_prefix: str = ''\n\n")
+            config.write("    key_prefix: str = ''\n\n\n")
 
         if is_celery_enabled:
             config.write("# ----------------------------------------------------------------\n")
             config.write("#                              Celery\n")
             config.write("# ----------------------------------------------------------------\n\n")
             config.write("class Celery:\n")
-            config.write("    broker: str = ''\n\n")
+            config.write("    broker: str = ''\n\n\n")
 
         config.write("# ----------------------------------------------------------------\n")
         config.write("#                              Config\n")
@@ -82,14 +84,16 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
         config.write("    time_zone: TimeZone = TimeZone()\n")
         config.write("    logger: Logger = Logger()\n")
         config.write("    locale: Locale = Locale()\n")
-        config.write("    database: Database = Database()\n")
+        config.write("    database: Database = Database()\n\n")
+        config.write("    def __init__(self):\n")
+        config.write("        wrapper(self)\n\n")
 
         if is_redis_enabled:
             config.write("    redis: Redis = Redis()\n")
 
         if is_celery_enabled:
             config.write("    celery: Celery = Celery()\n")
-        config.write("\n")
+        config.write("\n\n")
 
         config.write("# ----------------------------------------------------------------\n")
         config.write("#                       public config variable\n")
@@ -97,24 +101,24 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
         config.write("config: Config = Config()\n")
 
     with open(f"{project_name}/internals/config/config_wrapper.py", "w") as wrapper:
-        wrapper.write("from .config import config\n")
+        wrapper.write("from .config import Config\n")
         wrapper.write("import configparser\n\n")
-        wrapper.write("def wrapper() -> None:\n")
+        wrapper.write("def wrapper(config: Config) -> None:\n")
         wrapper.write('    """\n')
         wrapper.write("    Map config.ini to Config class\n")
         wrapper.write('    """\n')
 
-        wrapper.write("__config = configparser.ConfigParser()\n")
-        wrapper.write("__config.read('config.ini')\n\n")
+        wrapper.write("    __config = configparser.ConfigParser()\n")
+        wrapper.write("    __config.read('config.ini')\n\n")
 
-        wrapper.write("config.time_zone.zone = __config['TIMEZONE']['zone']\n")
-        wrapper.write("config.logger.level = __config['LOGGER']['level']\n")
-        wrapper.write("config.locale.default = __config['LOCALE']['default']\n")
-        wrapper.write("config.database.host = __config['DATABASE']['host']\n")
-        wrapper.write("config.database.port = __config['DATABASE']['port']\n")
-        wrapper.write("config.database.db = __config['DATABASE']['db']\n")
-        wrapper.write("config.database.user = __config['DATABASE']['user']\n")
-        wrapper.write("config.database.password = __config['DATABASE']['password']\n")
+        wrapper.write("    config.time_zone.zone = __config['TIMEZONE']['zone']\n")
+        wrapper.write("    config.logger.level = __config['LOGGER']['level']\n")
+        wrapper.write("    config.locale.default = __config['LOCALE']['default']\n")
+        wrapper.write("    config.database.host = __config['DATABASE']['host']\n")
+        wrapper.write("    config.database.port = __config['DATABASE']['port']\n")
+        wrapper.write("    config.database.db = __config['DATABASE']['db']\n")
+        wrapper.write("    config.database.user = __config['DATABASE']['user']\n")
+        wrapper.write("    config.database.password = __config['DATABASE']['password']\n")
 
         if is_redis_enabled:
             wrapper.write("config.redis.address = __config['REDIS']['address']\n")
@@ -123,3 +127,6 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
 
         if is_celery_enabled:
             wrapper.write("config.celery.broker = __config['CELERY']['broker']\n")
+
+    with open(f"{project_name}/internals/config/__init__.py", "w") as init:
+        init.write("from .config import config\n")

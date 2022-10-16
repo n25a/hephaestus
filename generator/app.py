@@ -12,7 +12,7 @@ def make_app(project_name: str) -> None:
         app.write("#                             Repository\n")
         app.write("# ----------------------------------------------------------------\n\n")
         app.write("class Repository:\n")
-        app.write("    example: ExampleRepository = ExampleRepository()\n\n")
+        app.write("    example: ExampleRepository = ExampleRepository()\n\n\n")
 
         app.write("# ----------------------------------------------------------------\n")
         app.write("#                                App\n")
@@ -25,9 +25,12 @@ def make_app(project_name: str) -> None:
         app.write("    def __init__(self):\n")
         app.write("        logging.config.fileConfig('logging.conf')\n")
         app.write("        self.logger = logging.getLogger(self.app_name)\n")
-        app.write("        ascii_art.project_name()\n\n")
+        app.write("        ascii_art.project_name()\n\n\n")
 
         app.write("# ----------------------------------------------------------------\n")
         app.write("#                         public App variable\n")
         app.write("# ----------------------------------------------------------------\n\n")
         app.write("app: App = App()\n")
+
+    with open(f"{project_name}/internals/app/__init__.py", "w") as init:
+        init.write("from .app import app\n")

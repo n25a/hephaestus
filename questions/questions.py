@@ -41,7 +41,7 @@ def answer_questions() -> dict:
     :return: answers in dictionary type
     """
     answers = prompt(questions)
-
+    print(answers)
     if answers['celery']:
         ans_tmp = prompt(
             {
