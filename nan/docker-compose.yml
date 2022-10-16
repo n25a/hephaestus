@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  web:
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - redis
+      - celery
+  db:
+    image: mariadb:10.4.8
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root-secure-password"
+      MYSQL_DATABASE: "nan"
+      MYSQL_USER: "nan_app"
+      MYSQL_PASSWORD: "password"
+    volumes:
+      - ./db:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_general_ci
+  redis:
+    image: redis:6.0.5
+    ports:
+      - "6379:6379"
+  celery:
+    image: celery
+    restart: on-failure
+    command: celery -A nan beat -l info && celery -A nan worker -l info
+    depends_on:
+      - db
+      - redis
