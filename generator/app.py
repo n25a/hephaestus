@@ -1,7 +1,9 @@
 def make_app(project_name: str) -> None:
     """
     Make app.
-    """
+
+ :param project_name: project name in string type (e.g. my_project)
+   """
     with open(f"{project_name}/internals/app/app.py", "w") as app:
         app.write("from internals.app import ascii_art\n")
         app.write("from repositories.example import ExampleRepository\n")
