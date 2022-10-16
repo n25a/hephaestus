@@ -7,7 +7,7 @@ def make_toolkit(project_name: str) -> None:
     """
 
     with open(f'{project_name}/internals/toolkit/toolkit.py', 'w') as toolkit:
-        toolkit.write('from typing import Optional')
+        toolkit.write('from typing import Optional\n')
         toolkit.write('from rest_framework.response import Response\n\n\n')
 
         toolkit.write('# ERROR is error type\n')

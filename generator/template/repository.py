@@ -9,7 +9,7 @@ def make_repository(project_name: str) -> None:
         repository.write("from internals.toolkit import validate_error, ERROR\n")
         repository.write("from apps.example.serializers import ExampleSerializer\n\n\n")
         repository.write("class ExampleRepository:\n\n")
-        repository.write("    def create(data: Dict) -> Tuple[Optional[Dict], ERROR]:\n")
+        repository.write("    def create(self, data: Dict) -> Tuple[Optional[Dict], ERROR]:\n")
         repository.write("        example_serialized = ExampleSerializer(data=data)\n")
         repository.write("        if not example_serialized.is_valid():\n")
         repository.write("            err = validate_error(example_serialized.errors)\n")
