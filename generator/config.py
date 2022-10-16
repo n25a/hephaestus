@@ -1,6 +1,7 @@
 def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bool) -> None:
     """
     Make config.
+
     :param project_name: project name
     :param is_redis_enabled: redis is enabled or not
     :param is_celery_enabled: celery is enabled or not

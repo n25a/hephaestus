@@ -1,6 +1,8 @@
 def make_repository(project_name: str) -> None:
     """
     Make repository.
+
+    :param project_name: project name
     """
     with open(f"{project_name}/repositories/example.py", "w") as repository:
         repository.write("from typing import Tuple, Optional, Dict\n")

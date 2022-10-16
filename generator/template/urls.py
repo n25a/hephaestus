@@ -1,6 +1,8 @@
 def make_url(project_name: str) -> None:
     """
     Make url.
+
+    :param project_name: project name
     """
     with open(f"{project_name}/urls/example.py", "w") as urls:
         urls.write("from django.urls import path\n")

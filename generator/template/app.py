@@ -4,6 +4,8 @@ import os
 def make_app(project_name: str) -> None:
     """
     Make app.
+
+    :param project_name: project name
     """
     os.mkdir(f"{project_name}/apps/example")
 

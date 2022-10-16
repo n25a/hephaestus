@@ -1,6 +1,8 @@
 def make_view(project_name: str) -> None:
     """
     Make view.
+
+    :param project_name: project name
     """
     with open(f"{project_name}/views/example.py", "w") as views:
         views.write("from rest_framework.views import APIView\n")
