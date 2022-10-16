@@ -5,7 +5,7 @@ from apps.example.serializers import ExampleSerializer
 
 class ExampleRepository:
 
-    def create(data: Dict) -> Tuple[Optional[Dict], ERROR]:
+    def create(self, data: Dict) -> Tuple[Optional[Dict], ERROR]:
         example_serialized = ExampleSerializer(data=data)
         if not example_serialized.is_valid():
             err = validate_error(example_serialized.errors)

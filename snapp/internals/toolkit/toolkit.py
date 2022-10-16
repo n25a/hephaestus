@@ -1,4 +1,5 @@
-from typing import Optionalfrom rest_framework.response import Response
+from typing import Optional
+from rest_framework.response import Response
 
 
 # ERROR is error type

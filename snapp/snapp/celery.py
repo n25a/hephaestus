@@ -1,9 +1,9 @@
 import os
 from celery import Celery
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'nan.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'snapp.settings')
 
-app = Celery('nan')
+app = Celery('snapp')
 app.config_from_object('django.conf:settings', namespace='CELERY')
 app.autodiscover_tasks(
     ['internals.jobs'],

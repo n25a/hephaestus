@@ -1,6 +1,6 @@
 HOST=127.0.0.1
 TEST_PATH=./
-PROJECT_NAME="nan"
+PROJECT_NAME="snapp"
 
 help:
     @echo "make help - Show this help message."

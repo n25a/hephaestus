@@ -54,4 +54,4 @@ def generate_project(answers: dict) -> None:
 
     make_readme(answers['project_name'], answers['project_description'])
 
-    make_git()
+    make_git(answers['project_name'])

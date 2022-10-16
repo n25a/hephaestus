@@ -17,7 +17,7 @@ class Repository:
 # ----------------------------------------------------------------
 
 class App:
-    app_name: str = 'nan'
+    app_name: str = 'snapp'
     logger: logging.Logger = None
     repository: Repository = Repository()
 
