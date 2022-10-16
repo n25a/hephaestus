@@ -1,7 +1,8 @@
-def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bool) -> None:
+def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bool, broker: str) -> None:
     """
     Make config.
 
+    :param broker: celery broker. (e.g. redis or rabbitmq)
     :param project_name: project name
     :param is_redis_enabled: redis is enabled or not
     :param is_celery_enabled: celery is enabled or not
@@ -28,7 +29,10 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
 
         if is_celery_enabled:
             config.write("\n[CELERY]\n")
-            config.write("broker = 'redis://localhost:6379'\n")
+            if broker == 'redis':
+                config.write("broker = 'redis://localhost:6379'\n")
+            elif broker == 'rabbitmq':
+                config.write("broker = 'amqp://localhost'\n")
 
     with open(f"{project_name}/internals/config/config.py", "w") as config:
         config.write("from .config_wrapper import wrapper\n\n\n")
