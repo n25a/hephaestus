@@ -9,6 +9,7 @@ from .config import make_config
 from .template import generate_templates
 from .app import make_app
 from .logger import make_logger
+from .readme import make_readme
 
 
 def generate_project(answers: dict) -> None:
@@ -49,3 +50,5 @@ def generate_project(answers: dict) -> None:
     generate_templates(answers['project_name'], answers['celery'])
 
     make_logger(answers['project_name'])
+
+    make_readme(answers['project_name'], answers['project_description'])
