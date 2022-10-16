@@ -24,11 +24,11 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
             config.write("[REDIS]\n")
             config.write("address = 'redis://127.0.0.1:6379/1'\n")
             config.write("ttl = 3600\n")
-            config.write(f"key_prefix = '{project_name}'\n\n")
+            config.write(f"key_prefix = '{project_name}'\n")
 
         if is_celery_enabled:
-            config.write("[CELERY]\n")
-            config.write("broker = 'redis://localhost:6379'\n\n")
+            config.write("\n[CELERY]\n")
+            config.write("broker = 'redis://localhost:6379'\n")
 
     with open(f"{project_name}/internals/config/config.py", "w") as config:
         config.write("from .config_wrapper import wrapper\n\n\n")
@@ -102,7 +102,7 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
 
     with open(f"{project_name}/internals/config/config_wrapper.py", "w") as wrapper:
         wrapper.write("from .config import Config\n")
-        wrapper.write("import configparser\n\n")
+        wrapper.write("import configparser\n\n\n")
         wrapper.write("def wrapper(config: Config) -> None:\n")
         wrapper.write('    """\n')
         wrapper.write("    Map config.ini to Config class\n")
@@ -121,12 +121,12 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
         wrapper.write("    config.database.password = __config['DATABASE']['password']\n")
 
         if is_redis_enabled:
-            wrapper.write("config.redis.address = __config['REDIS']['address']\n")
-            wrapper.write("config.redis.ttl = __config['REDIS']['ttl']\n")
-            wrapper.write("config.redis.key_prefix = __config['REDIS']['key_prefix']\n")
+            wrapper.write("    config.redis.address = __config['REDIS']['address']\n")
+            wrapper.write("    config.redis.ttl = __config['REDIS']['ttl']\n")
+            wrapper.write("    config.redis.key_prefix = __config['REDIS']['key_prefix']\n")
 
         if is_celery_enabled:
-            wrapper.write("config.celery.broker = __config['CELERY']['broker']\n")
+            wrapper.write("    config.celery.broker = __config['CELERY']['broker']\n")
 
     with open(f"{project_name}/internals/config/__init__.py", "w") as init:
         init.write("from .config import config\n")

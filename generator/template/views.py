@@ -18,7 +18,7 @@ def make_view(project_name: str) -> None:
         views.write("    permission_classes = [IsAuthenticated]\n\n")
 
         views.write("    def post(self, request):\n")
-        views.write("        err = app.repository.example.create_example(request.data)\n")
+        views.write("        err = app.repository.example.create(request.data)\n")
         views.write("        if err:\n")
         views.write("            return err\n\n")
         views.write("        return response_creator(\n")
