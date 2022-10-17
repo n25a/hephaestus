@@ -11,6 +11,7 @@ from .app import make_app
 from .logger import make_logger
 from .readme import make_readme
 from .git import make_git
+from .requirements import make_requirements
 
 
 def generate_project(answers: dict) -> None:
@@ -53,5 +54,7 @@ def generate_project(answers: dict) -> None:
     make_logger(answers['project_name'])
 
     make_readme(answers['project_name'], answers['project_description'])
+
+    make_requirements(answers['redis'], answers['celery'])
 
     make_git(answers['project_name'])
