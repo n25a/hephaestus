@@ -4,8 +4,10 @@
 
 #  Hephaestus
 
-Hephaestus is a django restframework structure generator. The project start with ask some question and 
+Hephaestus is a django rest-framework structure generator. The project start with ask some question and 
 after that, your project template generate.
+
+
 ## Badges
 
 ![MIT License](https://img.shields.io/github/license/n25a/hephaestus?style=plastic)
@@ -45,7 +47,8 @@ Install hephaestus with PyPI
 ```bash
   pip install hephaestus
 ```
-    
+
+
 ## Usage
 
 You should just run following command in your terminal: 
