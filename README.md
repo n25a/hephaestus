@@ -67,7 +67,7 @@ You should just run following command in your terminal:
 
 ## Contributing
 
-[Contributions](https://github.com/n25a/hephaestus/blob/master/README.md) are always welcome!
+[Contributions](https://github.com/n25a/hephaestus/blob/master/contributing.md) are always welcome!
 
 See `contributing.md` for ways to get started.
 
