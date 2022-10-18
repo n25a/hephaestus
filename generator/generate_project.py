@@ -12,7 +12,7 @@ from .logger import make_logger
 from .readme import make_readme
 from .git import make_git
 from .requirements import make_requirements
-from gitignore import make_gitignore
+from .gitignore import make_gitignore
 from .manage import reformat_manage_py
 
 

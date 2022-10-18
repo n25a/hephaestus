@@ -19,7 +19,7 @@ def reformat_manage_py(project_name: str) -> None:
             if line.startswith("import sys"):
                 manage.write(line)
                 manage.write("\nfrom internals.log import init_logger\n")
-            if line.startswith("if __name__ == '__main__':"):
+            elif line.startswith("if __name__ == '__main__':"):
                 manage.write(line)
                 manage.write("    init_logger()\n")
             else:
