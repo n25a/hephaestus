@@ -11,6 +11,7 @@ def make_view(project_name: str) -> None:
         views.write("from rest_framework import status\n\n")
 
         views.write("from internals.toolkit import response_creator\n")
+        views.write("from internals.log import logger\n")
         views.write("from internals.app import app\n\n\n")
 
         views.write("class ExampleView(APIView):\n\n")
@@ -20,6 +21,7 @@ def make_view(project_name: str) -> None:
         views.write("    def post(self, request):\n")
         views.write("        err = app.repository.example.create(request.data)\n")
         views.write("        if err:\n")
+        views.write("            logger.error(err)\n")
         views.write("            return err\n\n")
         views.write("        return response_creator(\n")
         views.write("            data='penalty added successfully.',\n")
