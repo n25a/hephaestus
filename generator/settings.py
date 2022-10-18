@@ -77,24 +77,28 @@ def reformat_settings_py(project_name: str, is_redis_enabled: bool, is_celery_en
                     manage.write("    'default': {\n")
                     manage.write("        'BACKEND': 'django_redis.cache.RedisCache',\n")
                     manage.write("        'LOCATION': config.redis.address,\n")
+                    manage.write("        'TIMEOUT': config.redis.timeout\n")
                     manage.write("        'OPTIONS': {\n")
                     manage.write("            'CLIENT_CLASS': 'django_redis.client.DefaultClient',\n")
+                    manage.write("            'no_delay': True,\n")
+                    manage.write("            'use_pooling': True,\n")
+                    manage.write("            'max_pool_size': config.redis.max_pool_size,\n")
+                    manage.write("            'username': config.redis.username,\n")
+                    manage.write("            'password': config.redis.password,\n")
                     manage.write("        },\n")
                     manage.write("        'KEY_PREFIX': config.redis.key_prefix,\n")
                     manage.write("    }\n")
                     manage.write("}\n\n")
 
-                    manage.write("# Cache time to live\n")
-                    manage.write("CACHE_TTL = config.redis.ttl\n\n")
-
                 if is_celery_enabled:
                     manage.write("# config rabbitmq as broker for celery to send or receive messages from django\n")
                     manage.write("CELERY_BROKER_URL = config.celery.broker\n\n")
+                    manage.write("CELERY_RESULT_BACKEND = config.celery.result_backend\n\n")
 
                 manage.write(line)
 
             elif line.startswith("TIME_ZONE = 'UTC'"):
-                manage.write("TIME_ZONE = config.time_zone.zone\n")
+                manage.write("TIME_ZONE = config.time_zone.time_zone\n")
 
             elif line.startswith("STATIC_URL = 'static/'"):
                 manage.write(line)

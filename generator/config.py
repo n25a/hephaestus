@@ -1,7 +1,14 @@
-def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bool, broker: str) -> None:
+def make_config(
+        project_name: str,
+        is_redis_enabled: bool,
+        is_celery_enabled: bool,
+        broker: str,
+        result_backend: str
+) -> None:
     """
     Make config.
 
+    :param result_backend: result backend in string type (e.g. redis)
     :param broker: celery broker. (e.g. redis or rabbitmq)
     :param project_name: project name
     :param is_redis_enabled: redis is enabled or not
@@ -27,8 +34,11 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
         if is_redis_enabled:
             config.write("[REDIS]\n")
             config.write("address = 'redis://127.0.0.1:6379/1'\n")
-            config.write("ttl = 3600\n")
+            config.write("timeout = 300\n")
             config.write(f"key_prefix = '{project_name}'\n")
+            config.write(f"username = ''\n")
+            config.write("password = ''\n\n")
+            config.write("max_pool_size = 4\n\n")
 
         if is_celery_enabled:
             config.write("\n[CELERY]\n")
@@ -36,6 +46,11 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
                 config.write("broker = 'redis://localhost:6379'\n")
             elif broker == 'rabbitmq':
                 config.write("broker = 'amqp://localhost'\n")
+
+            if result_backend == 'redis':
+                config.write("result_backend = 'redis://localhost:6379'\n")
+            elif result_backend == 'rabbitmq':
+                config.write("result_backend = 'amqp://localhost'\n")
 
     with open(f"{project_name}/internals/config/config.py", "w") as config:
         config.write("from .config_wrapper import wrapper\n\n\n")
@@ -74,15 +89,19 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
             config.write("# ----------------------------------------------------------------\n\n")
             config.write("class Redis:\n")
             config.write("    address: str = ''\n")
-            config.write("    ttl: str = 60\n")
+            config.write("    timeout: str = 300\n")
             config.write("    key_prefix: str = ''\n\n\n")
+            config.write("    username: str = ''\n\n\n")
+            config.write("    password: str = ''\n\n\n")
+            config.write("    max_pool_size: int = 0\n\n\n")
 
         if is_celery_enabled:
             config.write("# ----------------------------------------------------------------\n")
             config.write("#                              Celery\n")
             config.write("# ----------------------------------------------------------------\n\n")
             config.write("class Celery:\n")
-            config.write("    broker: str = ''\n\n\n")
+            config.write("    broker: str = ''\n")
+            config.write("    result_backend: str = ''\n\n\n")
 
         config.write("# ----------------------------------------------------------------\n")
         config.write("#                              Config\n")
@@ -129,11 +148,15 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
 
         if is_redis_enabled:
             wrapper.write("    config.redis.address = __config['REDIS']['address']\n")
-            wrapper.write("    config.redis.ttl = __config['REDIS']['ttl']\n")
+            wrapper.write("    config.redis.timeout = __config['REDIS']['timeout']\n")
             wrapper.write("    config.redis.key_prefix = __config['REDIS']['key_prefix']\n")
+            wrapper.write("    config.redis.username = __config['REDIS']['username']\n")
+            wrapper.write("    config.redis.password = __config['REDIS']['password']\n")
+            wrapper.write("    config.redis.password = __config['REDIS']['max_pool_size']\n")
 
         if is_celery_enabled:
             wrapper.write("    config.celery.broker = __config['CELERY']['broker']\n")
+            wrapper.write("    config.celery.result_backend = __config['CELERY']['result_backend']\n")
 
     with open(f"{project_name}/internals/config/__init__.py", "w") as init:
         init.write("from .config import config\n")

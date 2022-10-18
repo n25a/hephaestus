@@ -44,17 +44,25 @@ def answer_questions() -> dict:
 
     if answers['celery']:
         ans_tmp = prompt(
-            {
-                'type': 'list',
-                'name': 'broker',
-                'message': 'What broker do you need?',
-                'choices': ['Redis', 'RabbitMQ'],
-                'filter': lambda val: val.lower()
-            }
+            [
+                {
+                    'type': 'list',
+                    'name': 'broker',
+                    'message': 'What broker do you need?',
+                    'choices': ['Redis', 'RabbitMQ'],
+                    'filter': lambda val: val.lower()
+                },
+                {
+                    'type': 'list',
+                    'name': 'result_backend',
+                    'message': 'What result backend do you need?',
+                    'choices': ['Redis', 'RabbitMQ'],
+                    'filter': lambda val: val.lower()
+                }
+            ]
         )
-
         answers |= ans_tmp
     else:
-        answers |= {'broker': ''}
+        answers |= {'broker': '', 'result_backend': ''}
 
     return answers
