@@ -13,6 +13,7 @@ from .readme import make_readme
 from .git import make_git
 from .requirements import make_requirements
 from gitignore import make_gitignore
+from .manage import reformat_manage_py
 
 
 def generate_project(answers: dict) -> None:
@@ -53,6 +54,8 @@ def generate_project(answers: dict) -> None:
     generate_templates(answers['project_name'], answers['celery'])
 
     make_logger(answers['project_name'])
+
+    reformat_manage_py(answers['project_name'])
 
     make_readme(answers['project_name'], answers['project_description'])
 
