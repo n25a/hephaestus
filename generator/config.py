@@ -3,11 +3,13 @@ def make_config(
         is_redis_enabled: bool,
         is_celery_enabled: bool,
         broker: str,
-        result_backend: str
+        result_backend: str,
+        database: str
 ) -> None:
     """
     Make config.
 
+    :param database: database in string type (e.g. postgresql)
     :param result_backend: result backend in string type (e.g. redis)
     :param broker: celery broker. (e.g. redis or rabbitmq)
     :param project_name: project name
@@ -26,14 +28,20 @@ def make_config(
 
         config.write("[DATABASE]\n")
         config.write("host = 127.0.0.1\n")
-        config.write("port = 3306\n")
+        if database == 'mysql':
+            config.write("port = 3306\n")
+        elif database == 'Postgresql':
+            config.write("port = 5432\n")
+        elif database == 'sqlite':
+            config.write("port = 0\n")
+
         config.write(f"db = '{project_name}'\n")
         config.write(f"user = '{project_name}_app'\n")
         config.write("password = 'password'\n\n")
 
         if is_redis_enabled:
             config.write("[REDIS]\n")
-            config.write("address = 'redis://127.0.0.1:6379/1'\n")
+            config.write("address = 'redis://127.0.0.1:6379'\n")
             config.write("timeout = 300\n")
             config.write(f"key_prefix = '{project_name}'\n")
             config.write(f"username = ''\n")

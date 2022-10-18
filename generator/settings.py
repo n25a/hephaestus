@@ -2,9 +2,10 @@ from typing import List
 import os
 
 
-def reformat_settings_py(project_name: str, is_redis_enabled: bool, is_celery_enabled: bool) -> None:
+def reformat_settings_py(project_name: str, is_redis_enabled: bool, is_celery_enabled: bool, database: str) -> None:
     """
     Reformat settings.py.
+    :param database: database type (postgres, mysql, sqlite)
     :param project_name: project name in string type (e.g. my_project)
     :param is_redis_enabled: redis enabled or not
     :param is_celery_enabled: celery enabled or not
@@ -12,12 +13,12 @@ def reformat_settings_py(project_name: str, is_redis_enabled: bool, is_celery_en
 
     settings_file: List[str] = []
     with open(f"{project_name}/{project_name}/settings.py", "r") as f:
-        settings = f.readlines()
+        settings_file = f.readlines()
 
     os.remove(f"{project_name}/{project_name}/settings.py")
 
     with open(f"{project_name}/{project_name}/settings.py", "w") as manage:
-        for line in settings:
+        for line in settings_file:
             if line.startswith("from pathlib import Path"):
                 manage.write(line)
                 manage.write("\nfrom internals.config import config\n")
@@ -52,13 +53,26 @@ def reformat_settings_py(project_name: str, is_redis_enabled: bool, is_celery_en
 
             elif line.startswith("DATABASES = {"):
                 manage.write(line)
-                manage.write("    'default': {\n")
-                manage.write("        'ENGINE': 'django.db.backends.mysql',\n")
-                manage.write("        'NAME': config.database.db,\n")
-                manage.write("        'USER': config.database.user,\n")
-                manage.write("        'PASSWORD': config.database.password,\n")
-                manage.write("        'HOST': config.database.host,\n")
-                manage.write("        'PORT': config.database.port,\n")
+                if database == "Postgresql":
+                    manage.write("    'default': {\n")
+                    manage.write("        'ENGINE': 'django.db.backends.postgresql_psycopg2',\n")
+                    manage.write("        'NAME': config.database.db,\n")
+                    manage.write("        'USER': config.database.user,\n")
+                    manage.write("        'PASSWORD': config.database.password,\n")
+                    manage.write("        'HOST': config.database.host,\n")
+                    manage.write("        'PORT': config.database.port,\n")
+                elif database == "mysql":
+                    manage.write("    'default': {\n")
+                    manage.write("        'ENGINE': 'django.db.backends.mysql',\n")
+                    manage.write("        'NAME': config.database.db,\n")
+                    manage.write("        'USER': config.database.user,\n")
+                    manage.write("        'PASSWORD': config.database.password,\n")
+                    manage.write("        'HOST': config.database.host,\n")
+                    manage.write("        'PORT': config.database.port,\n")
+                elif database == "sqlite":
+                    manage.write("    'default': {\n")
+                    manage.write("        'ENGINE': 'django.db.backends.sqlite3',\n")
+                    manage.write("        'NAME': BASE_DIR / 'db.sqlite3',\n")
 
             elif line.startswith("    'default': {") or \
                     line.startswith("        'ENGINE': 'django.db.backends.sqlite3',") or \

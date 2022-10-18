@@ -16,7 +16,7 @@ questions = [
         'type': 'list',
         'name': 'database',
         'message': 'What database do you need?',
-        'choices': ['Mysql', 'Sqlite'],
+        'choices': ['Mysql', 'Sqlite', 'Postgresql'],
         'filter': lambda val: val.lower()
     },
     {
