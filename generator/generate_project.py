@@ -14,6 +14,7 @@ from .git import make_git
 from .requirements import make_requirements
 from .gitignore import make_gitignore
 from .manage import reformat_manage_py
+from .settings import reformat_settings_py
 
 
 def generate_project(answers: dict) -> None:
@@ -56,6 +57,8 @@ def generate_project(answers: dict) -> None:
     make_logger(answers['project_name'])
 
     reformat_manage_py(answers['project_name'])
+
+    reformat_settings_py(answers['project_name'], answers['redis'],answers['celery'])
 
     make_readme(answers['project_name'], answers['project_description'])
 
