@@ -9,7 +9,7 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
     """
     with open(f"{project_name}/config.ini", "w") as config:
         config.write("[TIMEZONE]\n")
-        config.write("zone = 'Asia/Tehran'\n\n")
+        config.write("time_zone = 'Asia/Tehran'\n\n")
 
         config.write("[LOGGER]\n")
         config.write(f"key = '{project_name}'\n\n")
@@ -44,7 +44,7 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
         config.write("#                            Time Zone\n")
         config.write("# ----------------------------------------------------------------\n\n")
         config.write("class TimeZone:\n")
-        config.write("    zone: str = ''\n\n\n")
+        config.write("    time_zone: str = ''\n\n\n")
 
         config.write("# ----------------------------------------------------------------\n")
         config.write("#                              Logger\n")
@@ -118,7 +118,7 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
         wrapper.write("    __config = configparser.ConfigParser()\n")
         wrapper.write("    __config.read('config.ini')\n\n")
 
-        wrapper.write("    config.time_zone.zone = __config['TIMEZONE']['zone']\n")
+        wrapper.write("    config.time_zone.time_zone = __config['TIMEZONE']['time_zone']\n")
         wrapper.write("    config.logger.key = __config['LOGGER']['key']\n")
         wrapper.write("    config.locale.default = __config['LOCALE']['default']\n")
         wrapper.write("    config.database.host = __config['DATABASE']['host']\n")
