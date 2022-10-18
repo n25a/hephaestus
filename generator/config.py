@@ -11,6 +11,9 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
         config.write("[TIMEZONE]\n")
         config.write("zone = 'Asia/Tehran'\n\n")
 
+        config.write("[LOGGER]\n")
+        config.write(f"key = '{project_name}'\n\n")
+
         config.write("[LOCALE]\n")
         config.write("default = 'fa'\n\n")
 
@@ -47,7 +50,7 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
         config.write("#                              Logger\n")
         config.write("# ----------------------------------------------------------------\n\n")
         config.write("class Logger:\n")
-        config.write("    level: str = ''\n\n\n")
+        config.write("    key: str = ''\n\n\n")
 
         config.write("# ----------------------------------------------------------------\n")
         config.write("#                              Locale\n")
@@ -116,7 +119,7 @@ def make_config(project_name: str, is_redis_enabled: bool, is_celery_enabled: bo
         wrapper.write("    __config.read('config.ini')\n\n")
 
         wrapper.write("    config.time_zone.zone = __config['TIMEZONE']['zone']\n")
-        wrapper.write("    config.logger.level = __config['LOGGER']['level']\n")
+        wrapper.write("    config.logger.key = __config['LOGGER']['key']\n")
         wrapper.write("    config.locale.default = __config['LOCALE']['default']\n")
         wrapper.write("    config.database.host = __config['DATABASE']['host']\n")
         wrapper.write("    config.database.port = __config['DATABASE']['port']\n")

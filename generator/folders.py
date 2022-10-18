@@ -23,6 +23,7 @@ def make_folders(project_name: str, is_celery_enabled: bool) -> None:
     os.makedirs(f'{project_name}/internals/toolkit')
     os.makedirs(f'{project_name}/internals/app')
     os.makedirs(f'{project_name}/internals/config')
+    os.makedirs(f'{project_name}/internals/log')
 
     if is_celery_enabled:
         os.makedirs(f'{project_name}/internals/jobs')
