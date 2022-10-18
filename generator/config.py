@@ -30,7 +30,7 @@ def make_config(
         config.write("host = 127.0.0.1\n")
         if database == 'mysql':
             config.write("port = 3306\n")
-        elif database == 'Postgresql':
+        elif database == 'postgresql':
             config.write("port = 5432\n")
         elif database == 'sqlite':
             config.write("port = 0\n")
@@ -45,7 +45,7 @@ def make_config(
             config.write("timeout = 300\n")
             config.write(f"key_prefix = '{project_name}'\n")
             config.write(f"username = ''\n")
-            config.write("password = ''\n\n")
+            config.write("password = ''\n")
             config.write("max_pool_size = 4\n\n")
 
         if is_celery_enabled:
@@ -98,9 +98,9 @@ def make_config(
             config.write("class Redis:\n")
             config.write("    address: str = ''\n")
             config.write("    timeout: str = 300\n")
-            config.write("    key_prefix: str = ''\n\n\n")
-            config.write("    username: str = ''\n\n\n")
-            config.write("    password: str = ''\n\n\n")
+            config.write("    key_prefix: str = ''\n")
+            config.write("    username: str = ''\n")
+            config.write("    password: str = ''\n")
             config.write("    max_pool_size: int = 0\n\n\n")
 
         if is_celery_enabled:
@@ -118,16 +118,16 @@ def make_config(
         config.write("    time_zone: TimeZone = TimeZone()\n")
         config.write("    logger: Logger = Logger()\n")
         config.write("    locale: Locale = Locale()\n")
-        config.write("    database: Database = Database()\n\n")
-        config.write("    def __init__(self):\n")
-        config.write("        wrapper(self)\n\n")
+        config.write("    database: Database = Database()\n")
 
         if is_redis_enabled:
             config.write("    redis: Redis = Redis()\n")
 
         if is_celery_enabled:
             config.write("    celery: Celery = Celery()\n")
-        config.write("\n\n")
+
+        config.write("\n    def __init__(self):\n")
+        config.write("        wrapper(self)\n\n\n")
 
         config.write("# ----------------------------------------------------------------\n")
         config.write("#                       public config variable\n")

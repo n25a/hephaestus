@@ -53,7 +53,7 @@ def reformat_settings_py(project_name: str, is_redis_enabled: bool, is_celery_en
 
             elif line.startswith("DATABASES = {"):
                 manage.write(line)
-                if database == "Postgresql":
+                if database == "postgresql":
                     manage.write("    'default': {\n")
                     manage.write("        'ENGINE': 'django.db.backends.postgresql_psycopg2',\n")
                     manage.write("        'NAME': config.database.db,\n")
@@ -91,7 +91,7 @@ def reformat_settings_py(project_name: str, is_redis_enabled: bool, is_celery_en
                     manage.write("    'default': {\n")
                     manage.write("        'BACKEND': 'django_redis.cache.RedisCache',\n")
                     manage.write("        'LOCATION': config.redis.address,\n")
-                    manage.write("        'TIMEOUT': config.redis.timeout\n")
+                    manage.write("        'TIMEOUT': config.redis.timeout,\n")
                     manage.write("        'OPTIONS': {\n")
                     manage.write("            'CLIENT_CLASS': 'django_redis.client.DefaultClient',\n")
                     manage.write("            'no_delay': True,\n")

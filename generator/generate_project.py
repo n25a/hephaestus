@@ -55,6 +55,7 @@ def generate_project(answers: dict) -> None:
         answers['redis'],
         answers['celery'],
         answers['broker'],
+        answers['result_backend'],
         answers['database']
     )
 
@@ -64,11 +65,11 @@ def generate_project(answers: dict) -> None:
 
     reformat_manage_py(answers['project_name'])
 
-    reformat_settings_py(answers['project_name'], answers['redis'],answers['celery'])
+    reformat_settings_py(answers['project_name'], answers['redis'],answers['celery'], answers['database'])
 
     make_readme(answers['project_name'], answers['project_description'])
 
-    make_requirements(answers['redis'], answers['celery'])
+    make_requirements(answers['redis'], answers['celery'], answers['database'])
 
     make_gitignore(answers['project_name'])
 
