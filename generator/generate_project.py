@@ -12,6 +12,7 @@ from .logger import make_logger
 from .readme import make_readme
 from .git import make_git
 from .requirements import make_requirements
+from gitignore import make_gitignore
 
 
 def generate_project(answers: dict) -> None:
@@ -56,5 +57,7 @@ def generate_project(answers: dict) -> None:
     make_readme(answers['project_name'], answers['project_description'])
 
     make_requirements(answers['redis'], answers['celery'])
+
+    make_gitignore(answers['project_name'])
 
     make_git(answers['project_name'])
