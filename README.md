@@ -25,7 +25,8 @@ after that, your project template generate.
 
 ## Documentation
 
-You can see convention documentation of generated project by hephaestus in [here]().
+You can see convention documentation of generated project 
+by hephaestus in [here](https://github.com/n25a/hephaestus/blob/master/documentation.md).
 
 
 ## Features
