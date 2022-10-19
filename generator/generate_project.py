@@ -69,7 +69,7 @@ def generate_project(answers: dict) -> None:
 
     make_readme(answers['project_name'], answers['project_description'])
 
-    make_requirements(answers['redis'], answers['celery'], answers['database'])
+    make_requirements(answers['project_name'], answers['redis'], answers['celery'], answers['database'])
 
     make_gitignore(answers['project_name'])
 
