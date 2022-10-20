@@ -16,10 +16,10 @@ def make_folders(project_name: str, is_celery_enabled: bool) -> None:
     os.makedirs(f'{project_name}/apps')
     os.makedirs(f'{project_name}/urls')
     os.makedirs(f'{project_name}/assets')
-    os.makedirs(f'{project_name}/repositories')
     os.makedirs(f'{project_name}/views')
 
     os.makedirs(f'{project_name}/internals')
+    os.makedirs(f'{project_name}/internals/repositories')
     os.makedirs(f'{project_name}/internals/toolkit')
     os.makedirs(f'{project_name}/internals/app')
     os.makedirs(f'{project_name}/internals/config')

@@ -4,7 +4,7 @@ def make_repository(project_name: str) -> None:
 
     :param project_name: project name
     """
-    with open(f"{project_name}/repositories/example.py", "w") as repository:
+    with open(f"{project_name}/internals/repositories/example.py", "w") as repository:
         repository.write("from typing import Tuple, Optional, Dict\n")
         repository.write("from internals.toolkit import validate_error, ERROR\n")
         repository.write("from apps.example.serializers import ExampleSerializer\n\n\n")
