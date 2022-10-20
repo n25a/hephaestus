@@ -55,7 +55,7 @@ Install hephaestus with PyPI
 You should just run following command in your terminal: 
 
 ```bash
-  hephaestus startproject
+  hephaestus start-project
 ```
 
 
