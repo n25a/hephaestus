@@ -1,7 +1,5 @@
-from questions import answer_questions
-from generator import generate_project
+from cmd.root import cli
 
 
 if __name__ == '__main__':
-    answers = answer_questions()
-    generate_project(answers)
+    cli()
