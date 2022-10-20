@@ -28,6 +28,8 @@ myproject
 │   ├── log
 │   │   ├── __init__.py
 │   │   └── logging.py
+│   ├── repositories
+│   │   └── example.py
 │   └── toolkit
 │       ├── __init__.py
 │       └── toolkit.py
@@ -38,8 +40,6 @@ myproject
 │   ├── settings.py
 │   ├── urls.py
 │   └── wsgi.py
-├── repositories
-│   └── example.py
 ├── urls
 │   └── example.py
 ├── views
@@ -51,7 +51,6 @@ myproject
 ├── docker-compose.yml
 ├── logging.conf
 ├── manage.py
-├── .gitignore
 └── requirements.txt
 ```
 
@@ -119,6 +118,11 @@ It's contain logger class in project. You can config it with config file (loggin
 You can use public variable in this package called `logger` in everywhere in project that you want log.
 
 
+### repositories
+It's contain all repository classes in project. 
+You can create a new repository class in this package and use it in `Repository` class of `Application` class.
+
+
 ### toolkit
 It's contain toolkit class in project. It's contain some useful functions.  
 It's expire from [jsend](https://github.com/omniti-labs/jsend) rules.
@@ -127,11 +131,6 @@ It's expire from [jsend](https://github.com/omniti-labs/jsend) rules.
 ### myproject
 It's contain django project files in project. You can change it if you want.  
 As default, Hephaestus change `settings.py` file in this package.
-
-
-## repositories
-It's contain all repository classes in project. 
-You can create a new repository class in this package and use it in `Repository` class of `Application` class.
 
 
 ## urls
