@@ -33,6 +33,7 @@ by hephaestus in [here](https://github.com/n25a/hephaestus/blob/master/documenta
 
 - Use Mysql/Sqlite/Postgresql as database
 - Use redis for caching
+- Use nats
 - Use Celery and set what's broker and backend result to used  
 - Create Logger with config
 - Create Makefile
