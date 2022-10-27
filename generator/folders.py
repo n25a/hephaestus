@@ -1,12 +1,13 @@
 import os
 
 
-def make_folders(project_name: str, is_celery_enabled: bool) -> None:
+def make_folders(project_name: str, is_celery_enabled: bool, is_nats_enabled: bool) -> None:
     """
     Make folders for project.
 
     :param project_name: project name in string type (e.g. my_project)
     :param is_celery_enabled: celery is enabled or not in boolean type
+    :param is_nats_enabled: nat is enabled or not
     """
 
     if os.path.exists(project_name):
@@ -24,6 +25,10 @@ def make_folders(project_name: str, is_celery_enabled: bool) -> None:
     os.makedirs(f'{project_name}/internals/app')
     os.makedirs(f'{project_name}/internals/config')
     os.makedirs(f'{project_name}/internals/log')
+
+    if is_nats_enabled:
+        os.makedirs(f'{project_name}/internals/nats')
+        os.makedirs(f'{project_name}/internals/nats/handlers')
 
     if is_celery_enabled:
         os.makedirs(f'{project_name}/internals/jobs')
