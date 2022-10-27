@@ -3,11 +3,13 @@ def make_docker_compose(
         is_redis_enable: bool,
         is_rabbitmq_enable: bool,
         is_celery_enable: bool,
+        is_nats_enable: bool,
         broker: str,
 ) -> None:
     """
     Make docker-compose.yml for project.
 
+    :param is_nats_enable: nat is enabled or not
     :param broker: is celery broker (rabbitmq or redis)
     :param project_name: project name in string type (e.g. my_project)
     :param is_rabbitmq_enable: is rabbitmq enable in boolean type
@@ -16,12 +18,22 @@ def make_docker_compose(
     """
     with open(f'{project_name}/docker-compose.yml', 'w') as docker_compose:
         docker_compose.write('version: "3.9"\n\n')
+        if is_nats_enable:
+            docker_compose.write('networks:\n')
+            docker_compose.write('  app-tier:\n')
+            docker_compose.write('    driver: bridge\n\n')
+
         docker_compose.write('services:\n')
         docker_compose.write('  web:\n')
         docker_compose.write('    build: .\n')
         docker_compose.write('    command: python manage.py runserver 0.0.0.0:8000\n')
         docker_compose.write('    ports:\n')
         docker_compose.write('      - "8000:8000"\n')
+
+        if is_nats_enable:
+            docker_compose.write('    networks:\n')
+            docker_compose.write('      - app-tier\n')
+
         docker_compose.write('    depends_on:\n')
         docker_compose.write('      - db\n')
         if is_redis_enable:
@@ -69,3 +81,19 @@ def make_docker_compose(
                 docker_compose.write('      - redis\n')
             elif broker == 'rabbitmq':
                 docker_compose.write('      - rabbitmq\n')
+
+        if is_nats_enable:
+            docker_compose.write('  nats:\n')
+            docker_compose.write("    image: 'bitnami/nats:latest'\n")
+            docker_compose.write('    ports:\n')
+            docker_compose.write("      - 4222: 4222\n")
+            docker_compose.write("      - 6222: 6222\n")
+            docker_compose.write("      - 8222: 8222\n")
+            docker_compose.write("    environment:\n")
+            docker_compose.write("      NATS_BIND_ADDRESS: '0.0.0.0'\n")
+            docker_compose.write("      NATS_CLIENT_PORT_NUMBER: 4222\n")
+            docker_compose.write("      NATS_ENABLE_AUTH: 'no'\n")
+            docker_compose.write("      NATS_USERNAME: 'nats'\n")
+            docker_compose.write("      NATS_PASSWORD: ''\n")
+            docker_compose.write("    networks:\n")
+            docker_compose.write("      - app-tier\n")

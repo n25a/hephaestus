@@ -2,6 +2,7 @@ def make_config(
         project_name: str,
         is_redis_enabled: bool,
         is_celery_enabled: bool,
+        is_nats_enabled: bool,
         broker: str,
         result_backend: str,
         database: str
@@ -15,6 +16,7 @@ def make_config(
     :param project_name: project name
     :param is_redis_enabled: redis is enabled or not
     :param is_celery_enabled: celery is enabled or not
+    :param is_nats_enabled: nats is enabled or not
     """
     with open(f"{project_name}/config.ini", "w") as config:
         config.write("[TIMEZONE]\n")
@@ -46,7 +48,7 @@ def make_config(
             config.write(f"key_prefix = '{project_name}'\n")
             config.write(f"username = ''\n")
             config.write("password = ''\n")
-            config.write("max_pool_size = 4\n\n")
+            config.write("max_pool_size = 4\n")
 
         if is_celery_enabled:
             config.write("\n[CELERY]\n")
@@ -59,6 +61,17 @@ def make_config(
                 config.write("result_backend = 'redis://localhost:6379'\n")
             elif result_backend == 'rabbitmq':
                 config.write("result_backend = 'amqp://localhost'\n")
+
+        if is_nats_enabled:
+            config.write("\n[NATS]\n")
+            config.write("address = 'nats://localhost:4222'\n")
+            config.write(f"name = '{project_name}'\n")
+            config.write("username = ''\n")
+            config.write("password = ''\n")
+            config.write("drain_timeout = 30\n")
+            config.write("flush_timeout = 2\n")
+            config.write("connect_timeout = 2\n")
+            config.write("reconnect_time_wait = 2\n")
 
     with open(f"{project_name}/internals/config/config.py", "w") as config:
         config.write("from .config_wrapper import wrapper\n\n\n")
@@ -111,6 +124,20 @@ def make_config(
             config.write("    broker: str = ''\n")
             config.write("    result_backend: str = ''\n\n\n")
 
+        if is_nats_enabled:
+            config.write("# ----------------------------------------------------------------\n")
+            config.write("#                               Nats\n")
+            config.write("# ----------------------------------------------------------------\n\n")
+            config.write("class Nats:\n")
+            config.write("    address: str = ''\n")
+            config.write("    name: str = ''\n")
+            config.write("    username: Optional[str] = None\n")
+            config.write("    password: Optional[str] = None\n")
+            config.write("    drain_timeout: int = 30\n")
+            config.write("    flush_timeout: Optional[int] = None\n")
+            config.write("    connect_timeout: int = 2\n")
+            config.write("    reconnect_time_wait: int = 2\n\n\n")
+
         config.write("# ----------------------------------------------------------------\n")
         config.write("#                              Config\n")
         config.write("# ----------------------------------------------------------------\n\n")
@@ -125,6 +152,9 @@ def make_config(
 
         if is_celery_enabled:
             config.write("    celery: Celery = Celery()\n")
+
+        if is_nats_enabled:
+            config.write("    nats: Nats = Nats()\n")
 
         config.write("\n    def __init__(self):\n")
         config.write("        wrapper(self)\n\n\n")
@@ -165,6 +195,16 @@ def make_config(
         if is_celery_enabled:
             wrapper.write("    config.celery.broker = __config['CELERY']['broker']\n")
             wrapper.write("    config.celery.result_backend = __config['CELERY']['result_backend']\n")
+
+        if is_nats_enabled:
+            wrapper.write("    config.celery.address = __config['NATS']['address']\n")
+            wrapper.write("    config.celery.name = __config['NATS']['name']\n")
+            wrapper.write("    config.celery.username = __config['NATS']['username']\n")
+            wrapper.write("    config.celery.password = __config['NATS']['password']\n")
+            wrapper.write("    config.celery.drain_timeout = __config['NATS']['drain_timeout']\n")
+            wrapper.write("    config.celery.flush_timeout = __config['NATS']['flush_timeout']\n")
+            wrapper.write("    config.celery.connect_timeout = __config['NATS']['connect_timeout']\n")
+            wrapper.write("    config.celery.reconnect_time_wait = __config['NATS']['reconnect_time_wait']\n")
 
     with open(f"{project_name}/internals/config/__init__.py", "w") as init:
         init.write("from .config import config\n")

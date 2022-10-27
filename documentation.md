@@ -28,6 +28,12 @@ myproject
 │   ├── log
 │   │   ├── __init__.py
 │   │   └── logging.py
+│   ├── nats
+│   │   ├── __init__.py
+│   │   ├── handlers
+│   │   ├── nats.py
+│   │   ├── publish.py
+│   │   └── subscribe.py
 │   ├── repositories
 │   │   └── example.py
 │   └── toolkit
@@ -81,13 +87,15 @@ The application class in like this:
 class App:
     app_name: str = 'myproject'
     repository: Repository = Repository()
+    nats_client: Optional[nats.NATS] = None
 
     def __init__(self):
         ascii_art.project_name()
+        self.nats_client = await internal_nats.create_client()
 ```
 
-`app_name` is name of project.  
-`repository` is a repository class that you can use it for access to database or using cache. 
+The `app_name` is name of project.  
+The `repository` is a repository class that you can use it for access to database or using cache. 
 If you want to create a new repository, you can create a new class in `repository` package
 and use it in `repository` attribute.  
 
@@ -109,6 +117,8 @@ class Config:
     def __init__(self):
         wrapper(self)
 ```
+
+
 ### jobs
 It's contain celery tasks in project. You can create a new task in this package and use it in everywhere in project.
 
@@ -116,6 +126,13 @@ It's contain celery tasks in project. You can create a new task in this package 
 ### log
 It's contain logger class in project. You can config it with config file (logging.conf).
 You can use public variable in this package called `logger` in everywhere in project that you want log.
+
+
+### nats
+It's contain nats client initializer, publisher functions, subscriber functions, handlers, callback functions and
+default message handler.  
+At starting app, the client subscribes in topics in `subscribe_all_topics` function and when app shutdown, 
+it's unsubscribe all topics and drain the nats' client. You can check it in `manage.py` file.
 
 
 ### repositories
