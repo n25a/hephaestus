@@ -1,5 +1,5 @@
 
-![Logo](https://github.com/n25a/hephaestus/blob/add-logo/logo.jpg)
+![Logo](https://user-images.githubusercontent.com/49960770/198405452-235938fb-f083-4289-ba5e-55cf564676f3.png)
 
 
 <h3 align="center">⚠️ Hephaestus is Under Develop ⚠️</h3>
