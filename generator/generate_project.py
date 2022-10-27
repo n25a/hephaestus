@@ -15,6 +15,7 @@ from .requirements import make_requirements
 from .gitignore import make_gitignore
 from .manage import reformat_manage_py
 from .settings import reformat_settings_py
+from .nats import make_nats
 
 
 def generate_project(answers: dict) -> None:
@@ -26,6 +27,7 @@ def generate_project(answers: dict) -> None:
     make_folders(
         answers['project_name'],
         answers['celery'],
+        answers['nats'],
     )
 
     make_dockerfile(answers['project_name'])
@@ -38,6 +40,7 @@ def generate_project(answers: dict) -> None:
         answers['redis'],
         is_rabbitmq_enable,
         answers['celery'],
+        answers['nats'],
         answers['broker']
     )
 
@@ -48,28 +51,43 @@ def generate_project(answers: dict) -> None:
 
     make_ascii_art(answers['project_name'])
 
-    make_app(answers['project_name'])
+    make_app(answers['project_name'], answers['nats'])
 
     make_config(
         answers['project_name'],
         answers['redis'],
         answers['celery'],
+        answers['nats'],
         answers['broker'],
         answers['result_backend'],
         answers['database']
     )
 
-    generate_templates(answers['project_name'], answers['celery'])
+    generate_templates(answers['project_name'], answers['celery'], answers['nats'])
 
     make_logger(answers['project_name'])
 
-    reformat_manage_py(answers['project_name'])
+    if answers['nats']:
+        make_nats(answers['project_name'])
 
-    reformat_settings_py(answers['project_name'], answers['redis'],answers['celery'], answers['database'])
+    reformat_manage_py(answers['project_name'], answers['nats'])
+
+    reformat_settings_py(
+        answers['project_name'],
+        answers['redis'],
+        answers['celery'],
+        answers['database']
+    )
 
     make_readme(answers['project_name'], answers['project_description'])
 
-    make_requirements(answers['project_name'], answers['redis'], answers['celery'], answers['database'])
+    make_requirements(
+        answers['project_name'],
+        answers['redis'],
+        answers['celery'],
+        answers['nats'],
+        answers['database']
+    )
 
     make_gitignore(answers['project_name'])
 
