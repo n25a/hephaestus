@@ -12,7 +12,7 @@ def make_repository(project_name: str) -> None:
         repository.write("    def create(self, data: Dict) -> Tuple[Optional[Dict], ERROR]:\n")
         repository.write("        example_serialized = ExampleSerializer(data=data)\n")
         repository.write("        if not example_serialized.is_valid():\n")
-        repository.write("            err = validate_error(example_serialized.errors)\n")
+        repository.write("            err = validate_error(example_serialized)\n")
         repository.write("            return None, err\n")
         repository.write("        example_serialized.save()\n\n")
         repository.write("        return example_serialized.data, None\n")
