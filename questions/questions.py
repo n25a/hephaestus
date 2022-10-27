@@ -27,10 +27,16 @@ questions = [
     },
     {
         'type': 'confirm',
+        'name': 'nats',
+        'message': 'Do you want to the Nats?',
+        'default': False,
+    },
+    {
+        'type': 'confirm',
         'name': 'celery',
         'message': 'Do you want to the Celery?',
         'default': False,
-    },
+    }
 ]
 
 
