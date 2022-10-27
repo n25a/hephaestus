@@ -1,4 +1,10 @@
-def make_requirements(project_name: str, is_redis_enabled: bool, is_celery_enabled: bool, database: str):
+def make_requirements(
+        project_name: str,
+        is_redis_enabled: bool,
+        is_celery_enabled: bool,
+        is_nats_enabled: bool,
+        database: str,
+):
     """
     Make requirements.
 
@@ -6,6 +12,7 @@ def make_requirements(project_name: str, is_redis_enabled: bool, is_celery_enabl
     :param project_name: project name in string type (e.g. my_project)
     :param is_redis_enabled: redis is enabled or not
     :param is_celery_enabled: celery is enabled or not
+    :param is_nats_enabled: nats is enabled or not
     """
     with open(f'{project_name}/requirements.txt', 'w') as requirements:
         requirements.write('art==5.7\n')
@@ -32,6 +39,9 @@ def make_requirements(project_name: str, is_redis_enabled: bool, is_celery_enabl
             requirements.write('vine==5.0.0\n')
             requirements.write('wcwidth==0.2.5\n')
             requirements.write('amqp==5.1.1\n')
+
+        if is_nats_enabled:
+            requirements.write('nats-python')
 
         if database == 'postgrersql':
             requirements.write("psycopg2-binary==2.9.4\n")
