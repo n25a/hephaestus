@@ -1,4 +1,4 @@
-from cmd.root import cli
+from hephaestus.cmd import cli
 
 
 if __name__ == '__main__':
